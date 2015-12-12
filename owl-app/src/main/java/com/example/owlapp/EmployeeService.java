@@ -37,6 +37,34 @@ public class EmployeeService {
         } else {
             throw new Exception("The Employee id " + id + " not found");
         }
+    }
+    
+    public long addEmployee(Employee employee) {
+        employeeList.add(employee);
+        return employee.getId();
+    }
+    
+    public boolean updateEmployee(Employee customer) {
+        int matchIdx = 0;
+        Optional<Employee> match = employeeList.stream()
+                .filter(c -> c.getId() == customer.getId())
+                .findFirst();
+        if (match.isPresent()) {
+            matchIdx = employeeList.indexOf(match.get());
+            employeeList.set(matchIdx, customer);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean deleteEmployee(long id) {
+        Predicate<Employee> employee = e -> e.getId() == id;
+        if (employeeList.removeIf(employee)) {
+            return true;
+        } else {
+            return false;
+        }
     }   
 
 }

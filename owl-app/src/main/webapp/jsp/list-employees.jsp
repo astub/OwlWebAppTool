@@ -7,23 +7,42 @@
 
     <body>          
         <div class="container">
-            <h2>Employees</h2>
+            <h3>Texas State University - Owl tool</h3>
             <!--Search Form -->
             <form action="/employee" method="get" id="seachEmployeeForm" role="form">
                 <input type="hidden" id="searchAction" name="searchAction" value="searchByName">
                 <div class="form-group col-xs-5">
-                    <input type="text" name="employeeName" id="employeeName" class="form-control" required="true" placeholder="Type the Name or Last Name of the employee"/>                    
+                    <input type="text" name="employeeName" id="employeeName" class="form-control" required="true" placeholder="Type the name of a class or instance "/>                    
                 </div>
                 <button type="submit" class="btn btn-info">
-                    <span class="glyphicon glyphicon-search"></span> Search
+                    <span class="glyphicon glyphicon-cloud-upload"></span> Upload
+                </button>
+                <button class="btn btn-info">
+                    <span class="glyphicon glyphicon-play"></span> Sample
                 </button>
                 <br></br>
                 <br></br>
             </form>
             
+            <button type="submit" class="btn btn-primary  btn-md">
+                    <span class="glyphicon glyphicon-copyright-mark"></span> Classes
+            </button>
+            <button class="btn btn-primary  btn-md">
+                    <span class="glyphicon glyphicon-info-sign"></span> Instances
+            </button>
+            
+            <c:if test="${not empty message}">                
+				<div class="alert alert-success">
+					${message}
+				</div>
+			</c:if> 
+            
             <!--Employees List-->
             <form action="/employee" method="post" id="employeeForm" role="form" >              
-               
+				
+				<input type="hidden" id="idEmployee" name="idEmployee">
+				<input type="hidden" id="action" name="action">
+                
                 <c:choose>
                     <c:when test="${not empty employeeList}">
                         <table  class="table table-striped">
@@ -44,15 +63,21 @@
                                     <c:set var="classSucess" value="info"/>
                                 </c:if>
                                 <tr class="${classSucess}">
-                                    <td>${employee.id}</td>
+                                    <td><a href="/employee?idEmployee=${employee.id}&searchAction=searchById">${employee.id}</td>
                                     <td>${employee.name}</td>
                                     <td>${employee.lastName}</td>
                                     <td>${employee.birthDate}</td>
                                     <td>${employee.role}</td>
                                     <td>${employee.department}</td>
                                     <td>${employee.email}</td>   
-                                   
-                                </tr>
+                                	<td><a href="#" id="remove" 
+                                	onclick="document.getElementById('idEmployee').value='${employee.id}';
+            						document.getElementById('action').value='remove';
+            						document.getElementById('employeeForm').submit();"> 
+    								<span class="glyphicon glyphicon-trash"/>
+									</a>
+									</td> 
+                               </tr>
                             </c:forEach>               
                         </table>  
                     </c:when>                    
@@ -64,6 +89,12 @@
                     </c:otherwise>
                 </c:choose>                        
             </form>
+            
+            
+            <form action ="jsp/new-employee.jsp">            
+    		<br></br>
+    		<button type="submit" class="btn btn-primary  btn-md">New test</button> 
+			</form>
            
         </div>
     </body>

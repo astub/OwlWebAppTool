@@ -34,6 +34,15 @@ public class EmployeeServlet extends HttpServlet {
             case "searchByName":
                 searchEmployeeByName(req, resp);
                 break;
+//             case "add":
+//                 addEmployeeAction(req, resp);
+//                 break;
+//             case "edit":
+//                 editEmployeeAction(req, resp);
+//                 break;            
+//             case "remove":
+//                 removeEmployeeByName(req, resp);
+//                 break; 
             }
         }else{
             List<Employee> result = employeeService.getAllEmployees();
